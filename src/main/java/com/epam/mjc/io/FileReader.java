@@ -1,5 +1,7 @@
 package com.epam.mjc.io;
 
+import com.epam.mjc.io.exception.FileReaderException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class FileReader {
                 setProfileField(profile, lineEntry);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileReaderException(e.getMessage());
         }
         return profile;
     }
@@ -46,6 +48,7 @@ public class FileReader {
                 break;
             }
             default:{
+                throw new IllegalArgumentException(String.format("There is no field with name: %s, in class %s", lineEntry.getKey(), profile));
             }
         }
     }
